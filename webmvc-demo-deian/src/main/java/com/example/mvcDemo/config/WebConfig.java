@@ -21,20 +21,6 @@ import java.util.Locale;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-//
-//    @Autowired
-//    private SpringTemplateEngine templateEngine;
-//
-//    @PostConstruct
-//    public void extension() {
-//        FileTemplateResolver resolver = new FileTemplateResolver();
-//        resolver.setSuffix(".html");
-//        resolver.setTemplateMode("HTML5");
-//        resolver.setPrefix("/templates/");
-//        resolver.setOrder(templateEngine.getTemplateResolvers().size());
-//        resolver.setCacheable(false);
-//        templateEngine.addTemplateResolver(resolver);
-//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
