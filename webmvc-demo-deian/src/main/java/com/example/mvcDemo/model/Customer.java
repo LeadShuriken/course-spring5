@@ -5,31 +5,29 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Document(collection = "articles")
+@Document(collection = "customers")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Article {
+public class Customer {
     @Id
     private String id;
 
+    @NonNull @NotNull
+    @Size(min=3, max=60)
+    private String Name;
+
     private String pictureUrl;
 
-    @NotNull @Size(min = 3, max = 60)
-    @NonNull
-    private String title;
-
-    @NotBlank
-    @NonNull
-    private String content;
+    private List<Article> articles;
 
     @PastOrPresent
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

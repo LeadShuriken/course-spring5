@@ -1,6 +1,6 @@
 package com.example.mvcDemo.service;
 
-import com.example.mvcDemo.dao.ArticleRepository;
+import com.example.mvcDemo.dao.CustomerRepository;
 import com.example.mvcDemo.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,37 +10,37 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ArticleServiceImpl implements ArticleService {
+public class CustomerServiceImpl implements CustomerService {
     @Autowired
-    ArticleRepository articleRepository;
+    CustomerRepository customerRepository;
 
     @Override
     public List<Article> fetch() {
-        return articleRepository.findAll();
+        return customerRepository.findAll();
     }
 
     @Override
     public Optional<Article> get(String id) {
-        return articleRepository.findById(id);
+        return customerRepository.findById(id);
     }
 
     @Override
     public Article update(Article article) {
         article.setModified(LocalDateTime.now());
-        articleRepository.save(article);
+        customerRepository.save(article);
         return null;
     }
 
     @Override
     public Article add(Article article) {
-        return articleRepository.insert(article);
+        return customerRepository.insert(article);
     }
 
     @Override
     public Optional<Article> delete(String id) {
-        Optional<Article> toBeDeleted = articleRepository.findById(id);
+        Optional<Article> toBeDeleted = customerRepository.findById(id);
         if(toBeDeleted.isPresent()) {
-            articleRepository.deleteById(id);
+            customerRepository.deleteById(id);
         }
         return toBeDeleted;
     }
