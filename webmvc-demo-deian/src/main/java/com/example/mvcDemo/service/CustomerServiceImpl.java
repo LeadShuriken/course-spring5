@@ -1,7 +1,7 @@
 package com.example.mvcDemo.service;
 
 import com.example.mvcDemo.dao.CustomerRepository;
-import com.example.mvcDemo.model.Article;
+import com.example.mvcDemo.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,30 +15,30 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public List<Article> fetch() {
+    public List<Customer> fetch() {
         return customerRepository.findAll();
     }
 
     @Override
-    public Optional<Article> get(String id) {
+    public Optional<Customer> get(String id) {
         return customerRepository.findById(id);
     }
 
     @Override
-    public Article update(Article article) {
-        article.setModified(LocalDateTime.now());
-        customerRepository.save(article);
+    public Customer update(Customer customer) {
+        customer.setModified(LocalDateTime.now());
+        customerRepository.save(customer);
         return null;
     }
 
     @Override
-    public Article add(Article article) {
-        return customerRepository.insert(article);
+    public Customer add(Customer customer) {
+        return customerRepository.insert(customer);
     }
 
     @Override
-    public Optional<Article> delete(String id) {
-        Optional<Article> toBeDeleted = customerRepository.findById(id);
+    public Optional<Customer> delete(String id) {
+        Optional<Customer> toBeDeleted = customerRepository.findById(id);
         if(toBeDeleted.isPresent()) {
             customerRepository.deleteById(id);
         }

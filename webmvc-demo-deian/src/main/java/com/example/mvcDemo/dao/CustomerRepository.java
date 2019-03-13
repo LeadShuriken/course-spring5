@@ -1,14 +1,14 @@
 package com.example.mvcDemo.dao;
 
-import com.example.mvcDemo.model.Article;
+import com.example.mvcDemo.model.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CustomerRepository extends MongoRepository<Article, String> {
+public interface CustomerRepository extends MongoRepository<Customer, String> {
     @Override
-    List<Article> findAll();
+    List<Customer> findAll();
     @Override
-    Optional<Article> findById(String s);
+    Optional<Customer> findById(String s);
 }
