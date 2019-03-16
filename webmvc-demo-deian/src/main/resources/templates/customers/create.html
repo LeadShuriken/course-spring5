@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head(#{lbl.addArticle})" />
+<head th:replace="fragments/head :: head(#{lbl.addCustomer})" />
 <body>
     <nav th:replace="fragments/menu :: menu(${title})" />
     <div class="container">
-        <h3>Add an article</h3>
+        <h3>Create a customer</h3>
         <form
-                th:action="@{__${#request.contextPath}__/articles/create}"
-            th:object="${article}"
+                th:action="@{__${#request.contextPath}__/customers/create}"
+            th:object="${customer}"
               method="POST"
               enctype="multipart/form-data"
               class="form form-horizontal col-md-9 col-lg-6">
             <div class="form-group">
-                <label path="title" class="control-label col-sm-2">Title</label>
+                <label path="title" class="control-label col-sm-2">Name</label>
                 <div class="col-sm-10">
                     <input class="form-control"
-                           th:value="*{title}"
+                           th:value="*{name}"
                            th:errorclass="field"
-                           type="text" id="title"
-                           name="title"
-                           title="Article title" />
+                           type="text" id="name"
+                           name="name"
+                           title="Customer Name" />
                 </div>
             </div>
             <div class="form-group">
-                <label path="content" class="control-label col-sm-2">Content</label>
-                <div class="col-sm-10">
-                    <input class="form-control"
-                           th:value="*{content}"
-                           th:errorclass="field"
-                           type="text" id="content"
-                           name="content"
-                           title="Article content" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">File</label>
+                <label class="col-sm-2 control-label">Photo</label>
                 <div class="col-sm-10">
                     <input type="file" id="file" name="file" multiple class="form-control"/>
                 </div>
             </div>
-            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+            <div th:if="${articles != null && articles.size() > 0}" class="form-group">
+                <label class="col-sm-2 control-label">Contributed to articles</label>
+                <br>
+                <div th:each="row, rowStat :${articles}">
+                <input type="checkbox" id="articles" name="articles"
+                       th:value="${row.id}">
+                    <span class="col-sm-2"
+                         th:text="${row.title}"></span>
+                    <br>
+                </div>
+            </div>
+            <br>
+            <br>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                class="errors alert alert-danger col-sm-offset-2 col-sm-10">
-                Incorrect Title
-            </p>
-            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
-               class="errors alert alert-danger col-sm-offset-2 col-sm-10">
-                Incorrect Content
+                Incorrect Name
             </p>
             <p th:if="${fileError != null}"
                class="errors alert alert-danger col-sm-offset-2 col-sm-10">

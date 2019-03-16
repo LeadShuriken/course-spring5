@@ -1,0 +1,21 @@
+<table xmlns:th="http://www.thymeleaf.org" th:fragment="customerArticles(articles)" class="article-table table">
+    <thead>
+    <th th:text="#{lbl.title}">Title</th>
+    <th th:text="#{lbl.content}">Content</th>
+    <th th:text="#{lbl.picture}">Picture</th>
+    <th></th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr th:each="row, rowStat :${articles}">
+        <td th:text="${row.title}"></td>
+        <td th:text="${row.content}"></td>
+        <td>
+            <img th:if="${row.pictureUrl != null}" width="30px"
+                 style="border: 1px solid black"
+                 th:src="${'/uploads/' + row.pictureUrl}"/>
+        </td>
+        <td>
+    </tr>
+    </tbody>
+</table>

@@ -5,8 +5,6 @@ import com.example.mvcDemo.service.ArticleService;
 import com.example.mvcDemo.service.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.nio.file.FileSystemException;
 import java.util.Optional;
 
 @Controller
@@ -114,12 +111,5 @@ public class ArticlesController {
 
         articleService.update(article);
         return "redirect:/articles";
-    }
-
-    @ExceptionHandler ({FileSystemException.class})
-    @Order(1)
-    public ResponseEntity<String> handle(Exception ex) {
-        log.error("Article Controller Error:",ex);
-        return ResponseEntity.badRequest().body(ex.toString());
     }
 }

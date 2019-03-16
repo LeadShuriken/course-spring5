@@ -6,9 +6,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.resource.EncodedResourceResolver;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -19,8 +17,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 @Configuration
@@ -36,22 +32,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver());
     }
 
-    @Bean
-    HandlerExceptionResolver getExceptionResolver() {
-        return new HandlerExceptionResolver() {
-            @Override
-            public ModelAndView resolveException(
-                    HttpServletRequest request,
-                    HttpServletResponse response,
-                    Object object,
-                    Exception ex) {
-                ModelAndView modelAndView = new ModelAndView("errors");
-                if (ex instanceof MaxUploadSizeExceededException) {
-                    modelAndView.getModel().put("message", ex.getMessage());
-                }
-                return modelAndView;
-            }
-        };
+    @Override
+    public void addViewControllers(ViewControllerRegistry reg) {
+        reg.addRedirectViewController("/","customers");
     }
 
     //Tomcat large file upload connection reset
@@ -65,7 +48,6 @@ public class WebConfig implements WebMvcConfigurer {
                 factory.addConnectorCustomizers(
                         (connector) -> {
                             if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
-                                //-1 means unlimited
                                 ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(11534336); // 11 MB
                             }
                             connector.setMaxPostSize(11534336); // 11 MB

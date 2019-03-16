@@ -1,7 +1,9 @@
 package com.example.mvcDemo.service;
 
 import com.example.mvcDemo.dao.ArticleRepository;
+import com.example.mvcDemo.dao.CustomerRepository;
 import com.example.mvcDemo.model.Article;
+import com.example.mvcDemo.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    CustomerServiceImpl customerService;
 
     @Override
     public List<Article> fetch() {
@@ -27,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article update(Article article) {
         article.setModified(LocalDateTime.now());
+        customerService.updateArticle(article);
         articleRepository.save(article);
         return null;
     }
@@ -40,6 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Optional<Article> delete(String id) {
         Optional<Article> toBeDeleted = articleRepository.findById(id);
         if(toBeDeleted.isPresent()) {
+            customerService.removeArticle(id);
             articleRepository.deleteById(id);
         }
         return toBeDeleted;

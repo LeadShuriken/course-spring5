@@ -1,5 +1,6 @@
 package com.example.mvcDemo.service;
 
+import com.example.mvcDemo.model.Article;
 import com.example.mvcDemo.model.Customer;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface CustomerService {
     Customer update(Customer customer);
     Customer add(Customer customer);
     Optional<Customer> delete(String id);
+    void removeArticle(String id);
+    void updateArticle(Article article);
 }

@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head(#{lbl.articles})" />
+<head th:replace="fragments/head :: head(#{lbl.customers})" />
 <body>
     <nav th:replace="fragments/menu :: menu(${title})" />
     <div class="container">
-        <table class="article-table table table-striped">
+        <table class="article-table table table-striped" th:if="${customers.size() > 0}">
             <thead>
-                <th th:text="#{lbl.number}">Number</th>
-                <th th:text="#{lbl.title}">Title</th>
-                <th th:text="#{lbl.content}">Content</th>
-                <th th:text="#{lbl.created}">Created</th>
-                <th th:text="#{lbl.modified}">Modified</th>
-                <th th:text="#{lbl.picture}">Picture</th>
+                <th th:text="#{lbl.number}">ID</th>
+                <th th:text="#{lbl.name}">Name</th>
+                <th th:text="#{lbl.photo}">Customer Photo</th>
+                <th th:text="#{lbl.articles}">Articles</th>
                 <th></th>
                 <th></th>
             </thead>
             <tbody>
-                <tr th:each="row, rowStat :${articles}">
+                <tr th:each="row, rowStat :${customers}">
                     <td th:text="${rowStat.index + 1}"></td>
-                    <td th:text="${row.title}"></td>
-                    <td th:text="${row.content}"></td>
-                    <td th:text="${row.created}"></td>
-                    <td th:text="${row.modified}"></td>
+                    <td th:text="${row.name}"></td>
                     <td>
                         <img th:if="${row.pictureUrl != null}" width="30px"
                              style="border: 1px solid black"
                              th:src="${'/uploads/' + row.pictureUrl}"/>
                     </td>
+                    <td style="border: 1px solid gray" th:if="${row.articles.size() > 0}">
+                        <table th:if="${row.articles.size() > 0}"
+                               th:replace="fragments/customerArticles :: customerArticles(${row.articles})" ></table>
+                    </td>
+                    <td th:if="${row.articles.size() == 0}">
+                        No Articles
+                    </td>
                     <td>
-                        <a th:href="@{'/articles/edit/' + ${row.id}}">
+                        <a th:href="@{'/customers/edit/' + ${row.id}}">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     </td>
                     <td>
-                        <a th:href="@{'/articles/delete/' + ${row.id}}">
+                        <a th:href="@{'/customers/delete/' + ${row.id}}">
                             <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <p th:if="${customers.size() == 0}">No Customer Available</p>
     </div>
     <div th:replace="fragments/foot :: foot" />
 </body>

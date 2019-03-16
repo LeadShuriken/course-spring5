@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "customers")
@@ -21,13 +22,13 @@ public class Customer {
     @Id
     private String id;
 
-    @NonNull @NotNull
-    @Size(min=3, max=60)
-    private String Name;
+    @NotNull @Size(min = 3, max = 60)
+    @NonNull
+    private String name;
 
     private String pictureUrl;
 
-    private List<Article> articles;
+    private List<Article> articles = new ArrayList();
 
     @PastOrPresent
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

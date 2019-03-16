@@ -4,7 +4,7 @@
 <body>
     <nav th:replace="fragments/menu :: menu(${title})" />
     <div class="container">
-        <table class="article-table table table-striped">
+        <table class="article-table table table-striped" th:if="${articles.size() > 0}">
             <thead>
                 <th th:text="#{lbl.number}">Number</th>
                 <th th:text="#{lbl.title}">Title</th>
@@ -40,6 +40,7 @@
                 </tr>
             </tbody>
         </table>
+        <p th:if="${articles.size() == 0}">No Articles Available</p>
     </div>
     <div th:replace="fragments/foot :: foot" />
 </body>
